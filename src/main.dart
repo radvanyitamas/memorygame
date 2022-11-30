@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'data/data.dart';
 import 'model/TileModel.dart';
 
@@ -32,6 +33,7 @@ class _HomeState extends State<Home> {
   List<TileModel> gridViewTiles = <TileModel>[];
   List<TileModel> questionPairs = <TileModel>[];
   bool isStarted = false;
+  int _currentValue = 3;
 
   @override
   void initState() {
@@ -54,6 +56,22 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void newGame() {
+    myPairs = getPairs();
+    myPairs.shuffle();
+
+    gridViewTiles = myPairs;
+    setState(() {
+      if (kDebugMode) {
+        print("New Game");
+      }
+      questionPairs = getQuestionPairs();
+      gridViewTiles = questionPairs;
+      selected = false;
+      isStarted = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +85,22 @@ class _HomeState extends State<Home> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   child: Column(
                     children: [
+                      const Text(
+                        "Deck Size:",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      NumberPicker(
+                        value: _currentValue,
+                        minValue: 3,
+                        maxValue: 10,
+                        onChanged: (value) => setState(() {
+                          _currentValue = value;
+                          deckSize = value;
+                        }),
+                      ),
                       GestureDetector(
                         onTap: () {
                           setState(() {
@@ -92,7 +126,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                         width: 30,
                       ),
@@ -150,27 +184,69 @@ class _HomeState extends State<Home> {
                           )
                         : Column(
                             children: <Widget>[
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    points = 0;
-                                    reStart();
-                                  });
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: 200,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(24),
+                              const Text(
+                                "You win!",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      points = 0;
+                                      reStart();
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 200,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: const Text(
+                                      "Restart",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
-                                  child: const Text(
-                                    "Restart",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      points = 0;
+                                      steps = 0;
+                                      newGame();
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 200,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: const Text(
+                                      "New Game",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -198,7 +274,7 @@ class _HomeState extends State<Home> {
             children: const [
               SizedBox(
                 height: 50,
-                width: 30,
+                width: 20,
               ),
             ],
           ),
@@ -349,7 +425,6 @@ class _TileState extends State<Tile> {
                   selected = false;
                 });
                 selectedTile = "";
-
               });
             } else {
               if (kDebugMode) {
