@@ -2,8 +2,9 @@ class TileModel{
 
   String? imageAssetPath = "";
   bool? isSelected = false;
+  bool? isMatched = false;
 
-  TileModel({this.imageAssetPath, this.isSelected});
+  TileModel({this.imageAssetPath, this.isSelected, this.isMatched});
 
   void setImageAssetPath(String getImageAssetPath){
     imageAssetPath = getImageAssetPath;
@@ -19,5 +20,14 @@ class TileModel{
 
   bool getIsSelected(){
     return isSelected!;
+  }
+
+
+  void setIsMatched(bool getIsMatched){
+    isMatched = getIsMatched;
+  }
+
+  bool getIsMatched(){
+    return isMatched!;
   }
 }

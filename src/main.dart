@@ -8,7 +8,6 @@ import 'model/TileModel.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,7 +62,7 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: !isStarted
             ? Center(
-              child: Container(
+                child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   child: Column(
@@ -72,6 +71,7 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           setState(() {
                             points = 0;
+
                             reStart();
                           });
                         },
@@ -92,10 +92,35 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 50,
+                        width: 30,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showAlertDialog(context);
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: const Text(
+                            "INFORMATION",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-            )
+              )
             : Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
@@ -162,33 +187,47 @@ class _HomeState extends State<Home> {
     // use your app state here to create the actions you need
     // use if / else or switch / case for the states
     return [
-      Container(
-          child: Row(
+      Row(
         children: [
-          points != questionPairs.length / 2
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
-                      "Current tries: ",
-                      textAlign: TextAlign.start,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "$points",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              : Container(),
+          Text(
+            "Current tries: $steps",
+            textAlign: TextAlign.start,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+          Row(
+            children: const [
+              SizedBox(
+                height: 50,
+                width: 30,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    "Points: ",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "$points",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              )
+            ],
+          ),
           Row(
             children: <Widget>[
               GestureDetector(
                 onTap: () {
                   setState(() {
                     points = 0;
+                    steps = 0;
                     reStart();
                   });
                 },
@@ -212,8 +251,41 @@ class _HomeState extends State<Home> {
             ],
           )
         ],
-      ))
+      )
     ];
+  }
+
+  showAlertDialog(BuildContext context) {
+    // Create button
+    Widget okButton = ElevatedButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Information"),
+      content: const Text(""
+          "Present the user with an even number of cards, face down. "
+          "When the user clicks a card, “flip it over” and reveal the hidden image."
+          "When two cards are revealed:"
+          " - If the cards are identical, remove them from play."
+          " - If they are not, flip them back."
+          "The game ends when all the cards are removed."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
 
@@ -241,6 +313,8 @@ class _TileState extends State<Tile> {
             myPairs[widget.tileIndex].setIsSelected(true);
           });
           if (selectedTile != "") {
+            steps = steps + 1;
+
             /// testing if the selected tiles are same
             if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
               if (kDebugMode) {
@@ -248,7 +322,7 @@ class _TileState extends State<Tile> {
               }
               points = points + 1;
               if (kDebugMode) {
-                print(selectedTile + " thishis" + widget.imagePathUrl);
+                print(selectedTile + " thishis " + widget.imagePathUrl);
               }
 
               TileModel tileModel = TileModel();
@@ -256,7 +330,14 @@ class _TileState extends State<Tile> {
                 print(widget.tileIndex);
               }
               selected = true;
-              Future.delayed(const Duration(seconds: 2), () {
+              myPairs[widget.tileIndex].setIsMatched(true);
+              print("add matched");
+              print(myPairs[widget.tileIndex].imageAssetPath);
+              myPairs.forEach((element) {
+                print(element.imageAssetPath);
+                print(element.isMatched);
+              });
+              Future.delayed(const Duration(seconds: 1), () {
                 tileModel.setImageAssetPath("");
                 myPairs[widget.tileIndex] = tileModel;
                 if (kDebugMode) {
@@ -268,13 +349,15 @@ class _TileState extends State<Tile> {
                   selected = false;
                 });
                 selectedTile = "";
+
               });
             } else {
               if (kDebugMode) {
                 print(
-                    "$selectedTile thishis ${myPairs[widget.tileIndex].getImageAssetPath()}");
+                    "$selectedTile this is ${myPairs[widget.tileIndex].getImageAssetPath()}");
                 print("wrong choice");
                 print(widget.tileIndex);
+                print("Steps: $steps");
                 print(selectedIndex);
               }
               selected = true;

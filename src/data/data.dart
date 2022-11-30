@@ -4,6 +4,7 @@ String selectedTile = "";
 int selectedIndex = 0;
 bool selected = true;
 int points = 0;
+int steps = 0;
 
 List<TileModel> myPairs = <TileModel>[];
 List<bool> clicked = <bool>[];
@@ -29,6 +30,7 @@ List<TileModel>  getPairs(){
   //1
   tileModel.setImageAssetPath("assets/cards/angular.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -36,6 +38,7 @@ List<TileModel>  getPairs(){
   //2
   tileModel.setImageAssetPath("assets/cards/d3.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -43,6 +46,7 @@ List<TileModel>  getPairs(){
   //3
   tileModel.setImageAssetPath("assets/cards/evista.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -50,12 +54,14 @@ List<TileModel>  getPairs(){
   //4
   tileModel.setImageAssetPath("assets/cards/jenkins.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
   //5
   tileModel.setImageAssetPath("assets/cards/postcss.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -63,6 +69,7 @@ List<TileModel>  getPairs(){
   //6
   tileModel.setImageAssetPath("assets/cards/react.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -70,6 +77,7 @@ List<TileModel>  getPairs(){
   //7
   tileModel.setImageAssetPath("assets/cards/redux.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -77,6 +85,7 @@ List<TileModel>  getPairs(){
   //8
   tileModel.setImageAssetPath("assets/cards/sass.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -85,6 +94,7 @@ List<TileModel>  getPairs(){
   //9
   tileModel.setImageAssetPath("assets/cards/ts.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -92,6 +102,7 @@ List<TileModel>  getPairs(){
   //10
   tileModel.setImageAssetPath("assets/cards/webpack.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -107,6 +118,7 @@ List<TileModel>  getQuestionPairs(){
   //1
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -114,6 +126,7 @@ List<TileModel>  getQuestionPairs(){
   //2
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -121,6 +134,7 @@ List<TileModel>  getQuestionPairs(){
   //3
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -128,12 +142,14 @@ List<TileModel>  getQuestionPairs(){
   //4
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
   //5
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -141,6 +157,7 @@ List<TileModel>  getQuestionPairs(){
   //6
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -148,6 +165,7 @@ List<TileModel>  getQuestionPairs(){
   //7
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -155,6 +173,7 @@ List<TileModel>  getQuestionPairs(){
   //8
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -163,6 +182,7 @@ List<TileModel>  getQuestionPairs(){
   //9
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
@@ -170,6 +190,7 @@ List<TileModel>  getQuestionPairs(){
   //10
   tileModel.setImageAssetPath("assets/cards/question.png");
   tileModel.setIsSelected(false);
+  tileModel.setIsMatched(false);
   pairs.add(tileModel);
   pairs.add(tileModel);
   tileModel = TileModel();
